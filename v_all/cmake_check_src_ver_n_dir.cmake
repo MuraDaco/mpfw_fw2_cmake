@@ -31,14 +31,19 @@
 ##
 ### ---------------------------
 
-    if(NOT ${CMAKE_SRC_VER})
-        set(CMAKE_SRC_VER       ${CMAKE_SRC_VER_MODULE})
-    else()
+#### _______________________________________________________________
+## *** Section  1 - SET CMAKE SOFTWARE SOURCE VERSION & CMAKE MODULE DIRECTORY
 
-        if(NOT ${CMAKE_SRC_VER} STREQUAL ${CMAKE_SRC_VER_MODULE})
-            message(SEND_ERROR "CMAKE_SRC_VER (${CMAKE_SRC_VER}) variable is already set but is not equal to CMAKE_SRC_VER_MODULE (${CMAKE_SRC_VER_MODULE}) the CMAKE_SRC_VER associated to current module")
+    ## check and set cmake script source version & set MPFW_CODE_CMAKE_DIR variable
+        include(init/cmake_set_src_ver.cmake)
+        if(NOT CMAKE_SRC_VER)
+            set(CMAKE_SRC_VER       ${CMAKE_SRC_VER_MODULE})
+        else()
+
+            if(NOT ${CMAKE_SRC_VER} STREQUAL ${CMAKE_SRC_VER_MODULE})
+                message(SEND_ERROR "CMAKE_SRC_VER (${CMAKE_SRC_VER}) variable is already set but is not equal to CMAKE_SRC_VER_MODULE (${CMAKE_SRC_VER_MODULE}) the CMAKE_SRC_VER associated to current module")
+            endif()
         endif()
 
-    endif()
-
-    set(MPFW_CODE_CMAKE_DIR     ${MPFW_CODE_DIR}/cmake/mpfw_fw2_cmake/v_${CMAKE_SRC_VER} )
+        set(MPFW_CODE_CMAKE_DIR             ${MPFW_CODE_DIR}/cmake/mpfw_fw2_cmake/v_${CMAKE_SRC_VER} )
+        set(MPFW_CODE_CMAKE_DIR_FROM_BUILD  ${MPFW_CODE_DIR_FROM_BUILD}/cmake/mpfw_fw2_cmake/v_${CMAKE_SRC_VER} )

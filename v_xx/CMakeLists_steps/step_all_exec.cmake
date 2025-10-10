@@ -35,6 +35,8 @@
 ## *** Section  5 - SET STANDARD PROJECT VARIABLES
     set(EXECUTABLE exec_${APP_NAME_LOWER}.out )
 
+    enable_language( ASM)
+
     # specify the C++ standard
     set(CMAKE_CXX_STANDARD 20)
     set(CMAKE_CXX_STANDARD_REQUIRED true)
@@ -75,11 +77,7 @@
     set_target_link_dir_macro           (${MODULE_NAME})
     set_target_link_lib_macro           (${MODULE_NAME})
 
-    target_link_options(${EXECUTABLE} PRIVATE
-        -O3 
-        -Wall 
-        -Wextra 
-        -pedantic 
-        -lncurses
-    )
+    message("DEBUG - LIBRARY LINK - TARGET_LIB_LIST:    ${TARGET_LIB_LIST}")
 
+    include(${MPFW_CODE_CMAKE_DIR}/toolchain/${PLATFORM_NAME}/compile_option.cmake )
+    include(${MPFW_CODE_CMAKE_DIR}/toolchain/${PLATFORM_NAME}/link_option.cmake )

@@ -52,12 +52,15 @@
 ## *** Section  2 - INCLUDE MACRO & UTILITIES FUNCTIONS
     set(MODULE_PREFIX_UP                MPFW_FW2 )
 
-    string(TOUPPER ${MAIN_NAME} MAIN_NAME_UPPER )
-    string(TOUPPER ${APP_NAME} APP_NAME_UPPER )
-    string(TOLOWER ${MAIN_NAME} MAIN_NAME_LOWER )
-    string(TOLOWER ${APP_NAME} APP_NAME_LOWER )
-
     include(init/init_module_name.cmake)
+    if(NOT ${MODULE_NAME}_SRC_CFG)
+        if(SRC_CFG)
+            set(${MODULE_NAME}_SRC_CFG ${SRC_CFG})
+        else()
+            message(FATAL_ERROR "SRC_CFG parameter is missed!! you must set it.")
+        endif()
+    endif()
+
     string(TOLOWER  ${MODULE_NAME} MODULE_TYPE_NAME_LW )
     include(init/set_module_names.cmake)
 

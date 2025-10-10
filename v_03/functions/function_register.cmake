@@ -1,0 +1,45 @@
+#   *******************************************************************************
+#   
+#   mpfw / fw2 - Multi Platform FirmWare FrameWork 
+#       
+#   Copyright (C) (2023) Marco Dau
+#   
+#   This program is free software: you can redistribute it and/or modify
+#   it under the terms of the GNU Affero General Public License as published
+#   by the Free Software Foundation, either version 3 of the License, or
+#   (at your option) any later version.
+#   
+#   This program is distributed in the hope that it will be useful,
+#   but WITHOUT ANY WARRANTY; without even the implied warranty of
+#   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+#   GNU Affero General Public License for more details.
+#   
+#   You should have received a copy of the GNU Affero General Public License
+#   along with this program.  If not, see <https://www.gnu.org/licenses/>.
+#   
+#   You can contact me by the following email address
+#   marco <d o t> ing <d o t> dau <a t> gmail <d o t> com
+#   
+#   *******************************************************************************
+
+include_guard()
+
+macro(RegisterConfigDir paramDir root_dir paramRpath defaultRpath )
+        if(${paramRpath})
+            set(${paramDir}    ${${root_dir}}/${${paramRpath}} )
+            message("INFO - Config dir is NOT default one - ${paramDir}: ${${paramDir}}")
+        else()
+            set(${paramDir}    ${${root_dir}}/${${defaultRpath}} )
+            message("INFO - Config dir is set to default - ${paramDir}: ${${paramDir}}")
+        endif()
+endmacro()
+
+macro(RegisterConfigRpath paramRpathDest paramRpathSrc)
+    if(${paramRpathDest})
+        message(FATAL_ERROR "ERROR!!!! config dir is already registered - ${paramRpathDest}: ${${paramRpathDest}}" )
+    else()
+        set(${paramRpathDest}     ${${paramRpathSrc}})
+        message("INFO - Config dir is just registered by ${paramRpathSrc} with \"${${paramRpathDest}}\" relative path")
+    endif()
+endmacro()
+
