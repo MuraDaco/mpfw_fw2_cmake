@@ -1,0 +1,199 @@
+- commands to build the modules
+    - to build a module there are three script
+        - build_platform_all.sh
+            - it is the same as to perform in sequence
+                - build_platform_cmake.sh
+                - build_pltf.sh
+        - build_platform_cmake.sh
+            - to transform the cmake code in make scripts
+        - build_platform_cmake.sh
+            - to perform the compilation and the link step by the compiler
+    - the scripts described above have to be performed in the "main" cmake directory of the module to be build
+        - the "main" directory is one that has the "set_build_params.sh" file properly configured
+    - examples
+        - build_platfform_camke.sh <platform name> <list of trdp functionalities>
+        - or for the mdoules that have the [trdp] code
+        - build_platfform_camke.sh <platform name> <list of trdp functionalities>
+            - N.B.:  SDK [trdp] functionality is represented by platform name
+                - example
+                    - build_platfform_camke.sh mac mac
+                    - build_platfform_camke.sh stm32f769_disco stm32f769_disco
+        
+
+- how to create a new module / how to implement cmake workspace files
+    - the <module name> & its location
+        - description
+            - there is a dependency between the module name and its location respect the mpfw_code root directory
+    - module wsp dirs & files
+        -  <module root dir>/wsp/cmake/<version of source files configuration>/
+        -  <module root dir>/wsp/cmake/<version of CMakeLists.txt files>/
+            - init/
+                - <cmake_set_src_ver.cmake>
+                - <set_dependencies_list.cmake>
+                - <set_public_dirs.cmake>
+                - <set_public_rpath.cmake>
+                - <set_public_config_rpath.cmake>
+            - <cpp_files.cmake>
+                - variables
+                    - used
+                        - [${CURR_MOD_NAME}_cmmn_SRC_DIR]
+                            - description
+                            - defined in
+                                - cmake/mpfw_fw2_cmake/v_03/includes/set_public_dirs.cmake
+                                - cmake/mpfw_fw2_cmake/v_03/includes/set_public_rpaths.cmake
+                    - defined
+                        - [${CURR_MOD_NAME}_cmmn_SOURCE_FILES_CPP]
+                            - description
+                            - used by
+                                - cmake/mpfw_fw2_cmake/v_03/macro/macro_init.cmake
+            - <include_files.cmake>
+                - variables
+                    - used
+                        - [${CURR_MOD_NAME}_cmmn_SRC_DIR]
+                            - description
+                            - defined by
+                                - cmake/mpfw_fw2_cmake/v_03/includes/set_public_dirs.cmake
+                                - cmake/mpfw_fw2_cmake/v_03/includes/set_public_rpaths.cmake
+                    - defined
+                        - [${CURR_MOD_NAME}_cmmn_SOURCE_FILES_H]
+                            - description
+                            - used by
+                                - cmake/mpfw_fw2_cmake/v_03/macro/macro_init.cmake
+            - <set_build_params.sh>
+                - description
+
+
+- step to be implemented to create a new module
+    - set <rurl> file
+        - create cmake/mpfw_fw2_cmake/v_${CMAKE_SRC_VER}/rurls/set_<module name without mpfw_fw2 prefix (lower case)>_rurl.cmake
+            - examples
+                - if <module name> = mpfw_fw2-trdp-sdk-stm-stm32f769_disco-1trdp-usart
+                    - then <module name without mpfw_fw2 prefix (lower case)> = trdp-sdk-stm-stm32f769_disco-1trdp-usart
+        - set variable
+            - <MODULE NAME>_INIT_RURL = relative path respect "mpfw_fw2" dir of module folder
+                - example
+                    - set(FNCT-HW-1TRDP-SDK_INIT_RURL                 fnct/hw/layer/mpfw_fw2-fnct-hw-1trdp-sdk  )
+    - set <wsp> folder
+        - be careful to
+            - set the folders structure correctly
+                - wsp/c_[SRC_CFG]/
+                    - [SRC_CFG]=[x...] (whatever sequence of alpha-numeric characters) (WARNING: up this time only two characters have been used)
+                - wsp/v_[_WSP_VER]/cmake/
+                    - [_WSP_VER]=[x...] (whatever sequence of alpha-numeric characters) (WARNING: up this time only six characters have been used)
+            - set the variable name prefix or postfix exactly
+    - implement wsp files (file located in the "<module name>/wsp" folder)
+        - set <v_${${MODULE_NAME}_WSP_VER}/cmake/set_build_params.sh>
+            - description
+                - this script is called by the following script
+                    - build_platform_all_steps.sh or
+                    - build_platform_cmake.sh or
+                    - build_pltf.sh
+                - when the script ones are performed in the "wsp/v_[version]/cmake/" folder of the current mdoule
+                - this script is not performed when the CMakeLists.txt file is performed by another module as a dependency
+                    - in this case its parameters are passed from calling module and
+                    - the CMAKE_SRC_VER variable of the calling module will be check with the list variable "CMAKE_SRC_VER_MODULE" set in "wsp/v_00base/cmake/init/cmake_set_src_ver.cmake" file
+                        - if the value of CMAKE_SRC_VER is not contained in the "CMAKE_SRC_VER_MODULE" list an ERROR is raised and the build process fails
+            - variables
+                - defined
+                    - BUILD_DIR
+                    - CMAKE_SRC_VER: select the cmake script folder located in the "cmake/mpfw_fw2_cmake" directory
+                        - example
+                            - the cmake script executed are located in the "cmake/mpfw_fw2_cmake/v_${CMAKE_SRC_VER}" folder
+                            - if (CMAKE_SRC_VER = 03)
+                                - then the cmake script performed are located in the "cmake/mpfw_fw2_cmake/v_03" folder
+                    - SRC_CFG: select the folder where the source code versions/releases are set (see "set_src_ver.cmake" file)
+                        - the variables that are set here (more precisely in "set_src_ver.cmake" file) specifies what source code (see "src" folder) modules version has to be built
+                            - for more details about "set_src_ver.cmake" file and its variables see the <set_src_ver.cmake> description below
+                        - example
+                            - if the module is "mpfw_fw2-fnct-hw-0abst" and (SRC_CFG = 00)
+                                - then the "set_src_ver.cmake" file is located in fnct/hw/layer/mpfw_fw2-fnct-hw-0abst/wsp/c_${SRC_CFG} folder
+                                - therefore the folder is "fnct/hw/layer/mpfw_fw2-fnct-hw-0abst/wsp/c_00"
+        - set <c_${SRC_CFG}/set_src_ver.cmake>
+        - set <v_${${MODULE_NAME}_WSP_VER}/cmake/init/cmake_set_src_ver.cmake>
+            - description
+                - define the list of cmake code versions (sub folder of "cmake/mpfw_fw2_cmake" directory) suitable for the CMakeLists.txt script of the current module
+            - variables
+                - defined
+                    - CMAKE_SRC_VER_MODULE
+                        - it is a list of all cmake code versions suitable for the CMakeLists.txt script of the current module
+        - set <v_${${MODULE_NAME}_WSP_VER}/cmake/cpp_files.cmake>
+            - description
+                - here the source code files (.c & .cpp files) to be compiled are set
+            - variables
+                - used
+                    - <module name without mpfw_fw2 prefix (upper case)>_cmmn_SRC_DIR
+                    - <module name without mpfw_fw2 prefix (upper case)>_<trdp nikname in lowercase>_SRC_DIR
+                - defined
+                    - <module name without mpfw_fw2 prefix (upper case)>_cmmn_SOURCE_FILES_CPP
+                    - <module name without mpfw_fw2 prefix (upper case)>_<trdp nikname in lowercase>_SOURCE_FILES_CPP
+        - set <v_${${MODULE_NAME}_WSP_VER}/cmake/include_files.cmake>
+            - description
+                - here the source code header files folders (.h & .hpp files) are set
+            - variables
+                - used
+                    - <module name without mpfw_fw2 prefix (upper case)>_cmmn_SRC_DIR
+                    - <module name without mpfw_fw2 prefix (upper case)>_<trdp nikname in lowercase>_SRC_DIR
+                - defined
+                    - <module name without mpfw_fw2 prefix (upper case)>_cmmn_SOURCE_FILES_H
+                    - <module name without mpfw_fw2 prefix (upper case)>_<trdp nikname in lowercase>_SOURCE_FILES_H
+        - examples
+            - if <module name> = mpfw_fw2-trdp-sdk-stm-stm32f769_disco-1trdp-usart
+                - then <module name without mpfw_fw2 prefix (upper case)> = TRDP-SDK-STM-STM32F769_DISCO-1TRDP-USART
+        - set <v_${${MODULE_NAME}_WSP_VER}/cmake/init/set_dependencies_list.cmake>
+            - description
+                - set the list of the dependecies modules
+                - the variable names have a code that is explained below
+                    - the variables that contain the dependencies info have the following structure
+                        - ${MOD_NAME}_DEPS_LIST
+                        - ${MOD_NAME}_cmmn_DEPS_LIST
+                            - it is locate in the "common" directory
+                        - ${MOD_NAME}_<trdp nikname in lowercase>_DEPS_LIST
+                            - <trdp nikname> is the nickname of third party software and it is equal to trdp directory name
+                                - a trivial example is: "sdk"
+                            - it is located in one of the "trdp/<trdp functionality>" directory
+        - set <v_${${MODULE_NAME}_WSP_VER}/cmake/init/set_public_dirs.cmake>
+            - description
+                - set the absolute path of the source code configuration files
+        - set <v_${${MODULE_NAME}_WSP_VER}/cmake/init/set_public_rpath.cmake>
+                - set the relative path of the source code configuration files
+        - set <v_${${MODULE_NAME}_WSP_VER}/cmake/init/set_public_config_rpath.cmake>
+                - set the relative path of the source code header configuration folder path, see "management of config header file directories of the source code" thread below
+    - set <cmake/mpfw_fw2_cmake/v_${CMAKE_SRC_VER}/rurls/rurl.cmake>
+
+- management of config header file directories of the source code
+    - there are 3 steps to set a config header file directory
+        - step 1: [registration_by_user], that is, it set relative path (rpath) respect "mpfw_code" dir in a specific variable
+            - it is performed by the NOT-owner of the configuration file module, 
+            - that is, it is performed by a mdoule that depend to module that is the owner of the config file (owner module)
+        - step 2: [check_by_owner], that is, it set the absolute path by the owner mmodule
+            - the procedure is:
+                - 1. check the content of the relative path variable
+                    - if the variable is empty
+                        - then the variable is set to default value
+                    - if the variable is NOT-empty
+                        - then nothing is done
+                - 2. the variable fo the absolute path is set adding absolute path of the "mpfw_fw2" dir to the relative path previously set
+        - step 3: [activation_by_owner], that is, the owner module add the variable obtained in the prev. step in the "include_files.cmake" file where the compiler gets the include directories to use in compilation command
+    - steps details
+        - step 1
+            - the relative path (rpath) is set by [RegisterConfigRpath] macro
+            - cmake script calling flow
+                - CMakeLists.txt
+                    - step_all.cmake
+                        - init_var_macro: it is performed once by the module that performs the build procedure
+                            - set_public_rpath_macro
+                                - set_public_rpath.cmake
+                                    - [RegisterConfigRpath]
+                            - ...
+                            - set_public_config_rpath_macro
+                                - set_public_config_rpath.cmake
+                                    - [RegisterConfigRpath]
+        - step 2
+            - the absolute path (rpath) is set by [RegisterConfigDir] macro
+            - cmake script calling flow
+                - CMakeLists.txt
+                    - step_all.cmake
+                        - set_public_dirs_macro
+                            - set_public_dirs.cmake
+                                - [RegisterConfigDir]
+

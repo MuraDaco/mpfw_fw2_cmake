@@ -178,6 +178,8 @@
             message(FATAL_ERROR "   DEBUG - auto-generate procedure - Some issues occurred in making directory ${CPP_${service_name}_TBL_DIR_AUTO_GEN}")
         endif()
 
+		list(SORT task_${service_name}_define)
+
         message("   -----   ")
         execute_process(
     
@@ -195,6 +197,11 @@
 ##        message("   DEBUG - get_deps_list - end --> service_name: ${service_name}")
 ##        message("   DEBUG - AUTO-GENERATED FILE - ***********************************  "   )
 
+##		message("DEBUG - auto-gen proc - last step - 00 - ${MODULE_NAME}_SOURCE_FILES_H_WDEP: 	${${MODULE_NAME}_SOURCE_FILES_H_WDEP}")
+##		message("DEBUG - auto-gen proc - last step - 01 - CPP_${service_name}_TBL_TEMPLATE: 	${CPP_${service_name}_TBL_TEMPLATE}")
+##		message("DEBUG - auto-gen proc - last step - 02 - task_${service_name}_include: 		${task_${service_name}_include}")
+##		message("DEBUG - auto-gen proc - last step - 03 - task_${service_name}_define:			${task_${service_name}_define}")
+##		message("DEBUG - auto-gen proc - last step - 04 - CPP_${service_name}_TBL_AUTO_GEN: 	${CPP_${service_name}_TBL_AUTO_GEN}")
 
         add_custom_command(
             OUTPUT ${CPP_${service_name}_TBL_AUTO_GEN}

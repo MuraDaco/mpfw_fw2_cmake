@@ -39,7 +39,7 @@
         -fno-builtin 
         $<$<COMPILE_LANG_AND_ID:CXX,GNU>: -fno-rtti -fno-exceptions -std=gnu++14>
         -fno-rtti 
-        -fno-exceptions    
+        ## -fno-exceptions    
         -Wfatal-errors
         -DWP_PLATFORM_MAC
         -DRS485_ADDRESS=0x32

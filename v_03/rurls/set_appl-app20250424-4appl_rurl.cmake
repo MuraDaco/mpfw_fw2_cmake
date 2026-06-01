@@ -1,6 +1,7 @@
 #   *******************************************************************************
 #   
-#   mpfw / fw2 - Multi Platform FirmWare FrameWork
+#   mpfw / fw2 - Multi Platform FirmWare FrameWork 
+#       
 #   Copyright (C) (2023) Marco Dau
 #   
 #   This program is free software: you can redistribute it and/or modify
@@ -21,26 +22,16 @@
 #   
 #   *******************************************************************************
 
-    ## target_compile_definitions(${EXECUTABLE} PRIVATE
-    ##     -DRS485_ADDRESS=0x37
-    ## )
+### ---------------------------
+##
+#   set_modules_rurl.cmake
+#
+#   Created on: May, 28th 2025  (Wed)
+#   Author: Marco Dau
+##
+### ---------------------------
 
-    target_compile_options(${EXECUTABLE} PRIVATE
-        -g
-        -O3 
-        -Wall 
-        -c
-        -Wextra 
-        -pedantic   
-        -fno-common 
-        -ffunction-sections 
-        -fdata-sections 
-        #-ffreestanding 
-        -fno-builtin 
-        $<$<COMPILE_LANG_AND_ID:CXX,GNU>: -fno-rtti -fno-exceptions -std=gnu++14>
-        -fno-rtti 
-        ##-fno-exceptions    
-        -Wfatal-errors
-        -DWP_PLATFORM_MAC
-        -DRS485_ADDRESS=0x32
-    )
+## include_guard()
+
+set(APPL-${APP_NAME_UPPER}-4APPL_INIT_RURL        appl/${APP_NAME_LOWER}/layer/mpfw_fw2-appl-${APP_NAME_LOWER}-4appl  )
+

@@ -46,6 +46,7 @@ set(set_public_dirs_${type_name_up}_guard       ON)
     set(${type_name_up}_ROOT_DIR              ${MPFW_CODE_DIR}/${${type_name_up}_ROOT_RPATH} )
 
     set(${type_name_up}_cmmn_ROOT_DIR             ${MPFW_CODE_DIR}/${${type_name_up}_cmmn_ROOT_RPATH} )
+    set(${type_name_up}_ROOT_DIR                ${MPFW_CODE_DIR}/${${type_name_up}_cmmn_ROOT_RPATH} )
     foreach(item IN LISTS ${type_name_up}_TRDP_FNCT_LIST)
         set(${type_name_up}_${item}_ROOT_DIR            ${MPFW_CODE_DIR}/${${type_name_up}_${item}_ROOT_RPATH} )
     endforeach()
@@ -59,6 +60,7 @@ set(set_public_dirs_${type_name_up}_guard       ON)
 ## --- start section
 
     set(${type_name_up}_cmmn_WSP_DIR             ${MPFW_CODE_DIR}/${${type_name_up}_cmmn_WSP_RPATH} )
+    set(${type_name_up}_WSP_DIR                 ${MPFW_CODE_DIR}/${${type_name_up}_cmmn_WSP_RPATH} )
     foreach(item IN LISTS ${type_name_up}_TRDP_FNCT_LIST)
         set(${type_name_up}_${item}_WSP_DIR            ${MPFW_CODE_DIR}/${${type_name_up}_${item}_WSP_RPATH} )
     endforeach()
@@ -71,6 +73,7 @@ set(set_public_dirs_${type_name_up}_guard       ON)
 ## --- start section
 
     set(${type_name_up}_cmmn_SRC_DIR             ${MPFW_CODE_DIR}/${${type_name_up}_cmmn_SRC_RPATH} )
+    set(${type_name_up}_SRC_DIR             ${MPFW_CODE_DIR}/${${type_name_up}_cmmn_SRC_RPATH} )
     foreach(item IN LISTS ${type_name_up}_TRDP_FNCT_LIST)
         set(${type_name_up}_${item}_SRC_DIR            ${MPFW_CODE_DIR}/${${type_name_up}_${item}_SRC_RPATH} )
     endforeach()
@@ -83,6 +86,7 @@ set(set_public_dirs_${type_name_up}_guard       ON)
 ## --- start section
 
     set(${type_name_up}_cmmn_INCLUDE_DIR          ${MPFW_CODE_DIR}/${${type_name_up}_cmmn_INCLUDE_RPATH}          )
+    set(${type_name_up}_INCLUDE_DIR          ${MPFW_CODE_DIR}/${${type_name_up}_cmmn_INCLUDE_RPATH}          )
     ## message("DEBUG - set_public_dirs.cmake - ${type_name_up}_cmmn_INCLUDE_DIR: ${${type_name_up}_cmmn_INCLUDE_DIR}")
     foreach(item IN LISTS ${type_name_up}_TRDP_FNCT_LIST)
         set(${type_name_up}_${item}_INCLUDE_DIR            ${MPFW_CODE_DIR}/${${type_name_up}_${item}_INCLUDE_RPATH} )
@@ -94,15 +98,5 @@ set(set_public_dirs_${type_name_up}_guard       ON)
     ## --- end section
     ### **************************************************
 
-### **************************************************
-### --- set ..._<module name>_CONFIG_DIR variable
-## --- start section
-
-    ## my own config file
-
-    ## other's config files
-
-    ## --- end section
-    ### **************************************************
 
 ##end_include()

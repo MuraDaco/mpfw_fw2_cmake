@@ -34,7 +34,10 @@
     done
 
     while IFS= read -r item; do
-        echo "        $item,"
+        [ -n "$item" ] && {
+            echo "        $item,"
+        } || true
+        
     done < <( echo "$2" | sed  "s|;|\n|g" )
 
     while IFS= read item; do

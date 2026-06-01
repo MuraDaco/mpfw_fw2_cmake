@@ -66,6 +66,15 @@
             endif()
         endif()
 
+        if(${MODULE_NAME}_LAYER_UP STREQUAL "4TEST")
+            if(APP_NAME)
+                string(TOUPPER ${APP_NAME} APP_NAME_UPPER )
+                string(TOLOWER ${APP_NAME} APP_NAME_LOWER )
+            else()
+                message(FATAL_ERROR "\"APP_NAME\" build parameter is not set " )
+            endif()
+        endif()
+
         if(${MODULE_NAME}_TYPE_UP STREQUAL "APPL")
             if(APP_NAME)
                 ## CMakeLists.txt is called by "main" module and "APP_NAME" is set as build parameter

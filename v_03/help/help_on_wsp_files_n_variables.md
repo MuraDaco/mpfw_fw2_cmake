@@ -1,0 +1,54 @@
+
+- mpfw_fw2_cmake/<CMAKE_SRC_VER>
+    - includes/
+            - defined variables
+                - ${CURR_MOD_NAME}_SRC_DIR
+                - ${CURR_MOD_NAME}_cmmn_SRC_DIR
+                - ${CURR_MOD_NAME}_${TRDP}_SRC_DIR
+    - macro/
+        - macro_init.cmake
+            - used variables
+                - ${CURR_MOD_NAME}_cmmn_SRC_DIR
+    - rurls/
+        - set_<module name>_rurl.cmake
+            - defined variables
+                - <MODULE NAME>_INIT_RURL
+    - scripts/
+    - tasks_services/
+    - templates
+    - toolchain/
+    - utilities/
+- <module root dir>/wsp/cmake/<version>/
+    - init/
+        - cmake_set_src_ver.cmake
+            - 
+        - set_dependencies_list.cmake
+        - set_public_dirs.cmake
+        - set_public_rpath.cmake
+        - set_public_config_rpath.cmake
+            - register config variable
+                - <CONFIG FILE OWNER MODULE NAME>_<CONFIG FILE NICKNAME>_CONFIG_RPATH
+    - cpp_files.cmake
+        - used variables
+            - ${CURR_MOD_NAME}_cmmn_SRC_DIR
+        - defined variables
+            - ${CURR_MOD_NAME}_cmmn_SOURCE_FILES_CPP
+    - include_files.cmake
+        - used variables
+            - ${CURR_MOD_NAME}_cmmn_SRC_DIR
+        - defined variables
+            - ${CURR_MOD_NAME}_cmmn_SOURCE_FILES_CPP
+    - set_build_params.sh
+        - description
+            - it defines some variables that are used in build procedure. It is called/performed by the following scripts
+                - build_platform_all_steps.sh or
+                - build_platform_cmake.sh or
+                - build_pltf.sh
+        - variables
+            - BUILD_DIR
+                - relative path to build dir ( that is <module root dir>/build ) respect to CMakeLists.txt dir (that is <module root dir>/wsp/cmake/<version>/)
+                - example: 
+            - CMAKE_SRC_VER
+                - 
+            - SRC_CFG
+                - 

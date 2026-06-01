@@ -48,12 +48,6 @@ message(STATUS "Start set_public_rpath of -->> ${type_name_up} <<--")
 
     set(${type_name_up}_ROOT_RPATH              ${${type_name_up}_INIT_RURL} )
 
-    ## message("DEBUG - set_public_rpath - ${type_name_up}_ROOT_RPATH:         ${${type_name_up}_ROOT_RPATH}")
-    ## message("DEBUG - set_public_rpath - ${type_name_up}_cmmn_ROOT_RPATH:    ${${type_name_up}_cmmn_ROOT_RPATH}")
-
-    ## set_module_cmmn_root_path(${${type_name_up}_INIT_RURL})
-    ## set_module_trdp_root_path(${${type_name_up}_INIT_RURL})
-
     ## --- end section
     ### **************************************************
 
@@ -64,6 +58,7 @@ message(STATUS "Start set_public_rpath of -->> ${type_name_up} <<--")
     set(WSP_RPATH   wsp/v_${${type_name_up}_WSP_VER}/cmake )
 
     set(${type_name_up}_cmmn_WSP_RPATH             ${${type_name_up}_cmmn_ROOT_RPATH}/${WSP_RPATH} )
+    set(${type_name_up}_WSP_RPATH               ${${type_name_up}_cmmn_ROOT_RPATH}/${WSP_RPATH} )
     foreach(item IN LISTS ${type_name_up}_TRDP_FNCT_LIST)
         set(${type_name_up}_${item}_WSP_RPATH             ${${type_name_up}_${item}_ROOT_RPATH}/${WSP_RPATH} )
     endforeach()
@@ -86,6 +81,7 @@ message(STATUS "Start set_public_rpath of -->> ${type_name_up} <<--")
 ## --- start section
 
     set(${type_name_up}_cmmn_SRC_RPATH             ${${type_name_up}_cmmn_ROOT_RPATH}/src )
+    set(${type_name_up}_SRC_RPATH               ${${type_name_up}_cmmn_ROOT_RPATH}/src )
     foreach(item IN LISTS ${type_name_up}_TRDP_FNCT_LIST)
         set(${type_name_up}_${item}_SRC_RPATH             ${${type_name_up}_${item}_ROOT_RPATH}/src )
     endforeach()
@@ -98,6 +94,7 @@ message(STATUS "Start set_public_rpath of -->> ${type_name_up} <<--")
 ## --- start section
 
     set(${type_name_up}_cmmn_INCLUDE_RPATH          ${${type_name_up}_cmmn_WSP_RPATH} )
+    set(${type_name_up}_INCLUDE_RPATH           ${${type_name_up}_cmmn_WSP_RPATH} )
     foreach(item IN LISTS ${type_name_up}_TRDP_FNCT_LIST)
         set(${type_name_up}_${item}_INCLUDE_RPATH             ${${type_name_up}_${item}_WSP_RPATH} )
     endforeach()
@@ -105,15 +102,5 @@ message(STATUS "Start set_public_rpath of -->> ${type_name_up} <<--")
     ## --- end section
     ### **************************************************
 
-### **************************************************
-### --- set ..._<module name>_CONFIG_RPATH variable
-## --- start section
-
-    ## my own config file
-
-    ## other's config files
-
-    ## --- end section
-    ### **************************************************
 
 ##end_include()
