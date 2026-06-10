@@ -6,7 +6,7 @@
         array_line+=(
             "$item"
         )
-    done < <( echo "$1" | sed  "s|;|\n|g" )
+    done < <( echo "$1" | tr ';' '\n' )
 
     matrix_tasks=()
     for line in "${array_line[@]}";

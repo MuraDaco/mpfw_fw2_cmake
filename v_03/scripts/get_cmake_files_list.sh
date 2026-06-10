@@ -21,7 +21,7 @@
         array_line+=(
             "$item"
         )
-    done < <( echo "$4" | sed  "s|;|\n|g" )
+    done < <( echo "$4" | tr ';' '\n' )
 
     ## for trdp_fnct in ${array_line[@]}; do
     ##     echo "trdp_fnct: $trdp_fnct"

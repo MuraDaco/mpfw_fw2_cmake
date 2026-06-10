@@ -21,7 +21,7 @@
 
     while IFS= read -r item; do
         echo "$item"
-    done < <( echo "$1" | sed  "s|;|\n|g" )
+    done < <( echo "$1" | tr ';' '\n' )
 
     while IFS= read item; do
         ((item_id++))
@@ -38,7 +38,7 @@
             echo "        $item,"
         } || true
         
-    done < <( echo "$2" | sed  "s|;|\n|g" )
+    done < <( echo "$2" | tr ';' '\n' )
 
     while IFS= read item; do
         echo "$item"

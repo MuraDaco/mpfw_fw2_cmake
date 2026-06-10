@@ -22,7 +22,7 @@
             ## matrix_services+=("$rpath/${serviceName}Tbl.cpp;")
 
         }
-    done < <( echo "$1" | sed  "s|;|\n|g" )
+    done < <( echo "$1" | tr ';' '\n' )
 
     echo "${matrix_services[@]}"
 

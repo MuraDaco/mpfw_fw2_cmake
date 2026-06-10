@@ -19,7 +19,7 @@
             trdp_fnct_list+=("$trdp_rpath;")
 
         }
-    done < <( echo "$2" | sed  "s|;|\n|g" )
+    done < <( echo "$2" | tr ';' '\n' )
 
     echo "${trdp_fnct_list[@]}"
 
